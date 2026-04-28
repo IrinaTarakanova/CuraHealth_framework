@@ -15,18 +15,14 @@ import java.util.Map;
 
 public class BaseTest {
     protected WebDriver driver;
-    protected WebDriverWait wait;
     protected static final Logger logger =
             LogManager.getLogger(BaseTest.class);
 
 
     @BeforeMethod
     public void setUp() {
-        System.out.println("SYSTEM PRINT WORKS");
-        logger.error("LOGGER ERROR WORKS");
-        logger.info("LOGGER INFO WORKS");
-        logger.info("Launching browser");
 
+        logger.info("Launching browser");
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();

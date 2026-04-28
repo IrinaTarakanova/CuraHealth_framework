@@ -2,11 +2,12 @@ package tarakanova.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
+import tarakanova.base.BasePage;
 
-public class ConfirmationPage {
+public class ConfirmationPage extends BasePage {
     WebDriver driver;
     public ConfirmationPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
     }
 
@@ -18,23 +19,24 @@ public class ConfirmationPage {
     private final By comments = By.id("comment");
 
     public String getPageTitle() {
-        return driver.findElement(pageTitle).getText();
+       return getText(pageTitle);
+
     }
 
     public String getFacility() {
-        return driver.findElement(facility).getText();
+        return getText(facility);
     }
     public String getReadmission() {
-        return driver.findElement(readmission).getText();
+        return getText(readmission);
     }
     public String getHealthcareProgram() {
-        return driver.findElement(healthcareProgram).getText();
+        return getText(healthcareProgram);
     }
     public String getVisitDate() {
-        return driver.findElement(visitDate).getText();
+        return getText(visitDate);
     }
     public String getComment() {
-        return driver.findElement(comments).getText();
+        return getText(comments);
     }
 
 

@@ -3,10 +3,12 @@ package tarakanova.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
+import tarakanova.base.BasePage;
 
-public class AppointmentPage {
+public class AppointmentPage extends BasePage {
      WebDriver driver;
     public AppointmentPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
     }
 
@@ -24,19 +26,19 @@ public class AppointmentPage {
     }
 
     public void clickReadmissionCheckbox() {
-        driver.findElement(hospitalReadmission).click();
+        click(hospitalReadmission);
     }
     public void selectMedicaid(){
-        driver.findElement(healthcareProgram).click();
+       click(healthcareProgram);
     }
     public void enterVisitDate(String date){
-        driver.findElement(visitDateField).sendKeys(date);
+       type(visitDateField, date);
     }
     public void enterComment(String comment){
-        driver.findElement(commentField).sendKeys(comment);
+        type(commentField, comment);
     }
     public void clickBookAppointment() {
-        driver.findElement(bookAppointmentButton).click();
+       click(bookAppointmentButton);
     }
 
 }
