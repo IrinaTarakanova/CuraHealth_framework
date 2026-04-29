@@ -16,6 +16,12 @@ public class LoginPage extends BasePage {
     private final By usernameField = By.id("txt-username");
     private final By passwordField = By.id("txt-password");
     private final By loginButton = By.id("btn-login");
+    private final By errorMessage = By.cssSelector(".lead.text-danger");
+
+    public String getErrorMessage() {
+        String loginFailText = driver.findElement(errorMessage).getText().split("!")[0];
+        return loginFailText;
+    }
 
     public void login(String username, String password) {
         logger.info("Entering username");
