@@ -8,6 +8,7 @@ import tarakanova.pages.ConfirmationPage;
 import tarakanova.pages.HomePage;
 import tarakanova.pages.LoginPage;
 import tarakanova.utils.RetryAnalyzer;
+import tarakanova.utils.TestListener;
 
 
 public class AppointmentTest extends BaseTest {
@@ -15,18 +16,22 @@ public class AppointmentTest extends BaseTest {
     @Test(retryAnalyzer = RetryAnalyzer.class)
     public void userShouldBookAppointment(){
         HomePage homePage = new HomePage(driver);
-
+        TestListener.logInfo("Opening login page");
         LoginPage loginPage =  homePage.clickMakeAppointment();
+        TestListener.logInfo("Login with valid credentials");
         AppointmentPage appointmentPage = loginPage.login("John Doe", "ThisIsNotAPassword");
 
+        TestListener.logInfo("Filling appointment form");
         appointmentPage.selectFacility("Hongkong CURA Healthcare Center");
         appointmentPage.clickReadmissionCheckbox();
         appointmentPage.selectMedicaid();
         appointmentPage.enterVisitDate("30/05/2026");
         appointmentPage.enterComment("First automation appointment test");
 
+        TestListener.logInfo("Submitting appointment form");
         ConfirmationPage confirmationPage = appointmentPage.clickBookAppointment();
 
+        TestListener.logInfo("Validating appointment confirmation details");
         Assert.assertEquals(confirmationPage.getPageTitle(), "Appointment Confirmation");
         Assert.assertEquals(confirmationPage.getFacility(), "Hongkong CURA Healthcare Center");
         Assert.assertEquals(confirmationPage.getReadmission(), "Yes");

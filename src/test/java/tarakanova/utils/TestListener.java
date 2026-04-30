@@ -6,17 +6,14 @@ import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import org.testng.annotations.Listeners;
 import tarakanova.base.BaseTest;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
-import static java.lang.reflect.Array.set;
-
-@Listeners(TestListener.class)
 public class TestListener implements ITestListener {
 
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
@@ -26,27 +23,31 @@ public class TestListener implements ITestListener {
         test.set(ExtentReportManager.getReport()
                         .createTest(result.getName()));
         test.get().info("Test started");
+        test.get().info("Parameters: " + Arrays.toString(result.getParameters()));
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
         test.get().pass("Test passed");
+        test.remove();
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-
+        test.get().skip("Test skipped");
+        test.get().skip(result.getThrowable());
+        test.remove();
     }
 
-    @Override
-    public void onFinish(ITestContext context) {
-        ExtentReportManager.getReport().flush();
-    }
+
 
     @Override
     public void onTestFailure(ITestResult result) {
+        test.get().fail("Test failed");
+        test.get().fail(result.getThrowable());
+
         System.out.println("Test failed: " + result.getName());
-        System.out.println("Failed parameters: " + java.util.Arrays.toString(result.getParameters()));
+        System.out.println("Failed parameters: " + Arrays.toString(result.getParameters()));
         System.out.println("Failure reason: " + result.getThrowable().getMessage());
 
 
@@ -67,7 +68,15 @@ public class TestListener implements ITestListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        test.remove();
     }
-
-
+    @Override
+    public void onFinish(ITestContext context) {
+        ExtentReportManager.getReport().flush();
+    }
+    public static void logInfo(String message){
+        if(test.get() != null) {
+            test.get().info(message);
+        }
+    }
 }
