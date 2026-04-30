@@ -48,5 +48,11 @@ public class LoginPage extends BasePage {
         return new AppointmentPage(driver);
     }
 
+    public void loginWithEmptyFields() {
+        logger.info("Clicking login button without credentials");
+        click(loginButton);
+
+    }
+
 
 }

@@ -61,5 +61,11 @@ CuraHealth_framework
 ### Extent Report Preview
 
 ![Extent Report Preview](docs/images/extent-report.png)
+
+## Key Improvements
+
+- Fixed flaky tests by moving waits into Page Objects
+- Implemented proper page navigation (Login → Appointment → Confirmation)
+- Ensured each page method waits before returning next page
 ## Author
 Irina Tarakanova

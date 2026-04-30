@@ -9,6 +9,7 @@ import tarakanova.pages.LoginPage;
 import tarakanova.utils.JsonDataReader;
 import tarakanova.utils.RetryAnalyzer;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 
 public class LoginTest extends BaseTest {
 
@@ -26,6 +27,15 @@ public class LoginTest extends BaseTest {
      @DataProvider(name = "invalidCredentials")
     public Object[][] invalidCredentials() throws FileNotFoundException {
         return JsonDataReader.getInvalidLoginData();
+        }
+
+        @Test
+    public void loginWithEmptyFields() throws FileNotFoundException {
+
+        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = homePage.clickMakeAppointment();
+        loginPage.loginWithEmptyFields();
+            Assert.assertTrue(Objects.requireNonNull(driver.getCurrentUrl()).contains("profile.php#login"));
         }
      }
 
